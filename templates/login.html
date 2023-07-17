@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>用户登录</title>
+  <style>
+    body {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      width: 300px;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .login-title {
+      text-align: center;
+    }
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .input-container label {
+      font-weight: bold;
+    }
+
+    .input-container input {
+      height: 30px;
+      padding: 5px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .button-container button {
+      padding: 5px 10px;
+      border-radius: 3px;
+      border: none;
+      background-color: limegreen;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1 class="login-title">用户登录</h1>
+    <div class="input-container">
+      <label for="username">用户名:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">密码:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div class="button-container">
+      <button type="submit">登录</button>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector("button[type='submit']").addEventListener("click", function(event) {
+      event.preventDefault();
+
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/login", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.onload = function() {
+          var response = JSON.parse(xhr.responseText);
+          alert(response.message)
+      };
+
+      xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
+    });
+  </script>
+</body>
+</html>
